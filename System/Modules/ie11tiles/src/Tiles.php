@@ -25,11 +25,11 @@ namespace Fry\Ie11tiles;
  * @author     Yves Fridelance <yves@fridelance.ch>
  * @package    contao-ie_tiles
  */
-class Tiles extends \Backend
+class Tiles
 {
 
     public function test()
     {
-        \File::putContent('test.xml', 'Dies ist ein test');
+        \Contao\File::putContent('test.xml', 'Dies ist ein test');
     }
 } 
