@@ -5,7 +5,7 @@
  *
  * Copyright (c) 2005-2014 Leo Feyer
  *
- * @package   contao-ie_tiles
+ * @package   ie11tiles
  * @author    Yves Fridelance <yves@fridelance.ch>
  * @license   GNU/LGPL
  * @copyright Fridelance 2014
@@ -19,17 +19,16 @@ namespace Fry\Ie11tiles;
 
 
 /**
- * Class Tiles
+ * Class Helper
  *
  * @copyright  Fridelance 2014
  * @author     Yves Fridelance <yves@fridelance.ch>
- * @package    contao-ie_tiles
+ * @package    ie11tiles
  */
-class Tiles
+class Helper
 {
-
-    public function test()
+    public static function writeFile($file, $string)
     {
-        \Ie11tiles\Helper::writeFile('test.xml', 'Dies ist ein test');
+        \File::putContent($file, $string);
     }
 } 
