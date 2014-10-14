@@ -30,6 +30,6 @@ class Tiles
 
     public function test()
     {
-        \Contao\File::putContent('test.xml', 'Dies ist ein test');
+        \File::putContent('test.xml', 'Dies ist ein test');
     }
 } 
