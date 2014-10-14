@@ -274,7 +274,7 @@ array_insert($GLOBALS['BE_MOD']['design'], 3, array
  * source code by registering callback functions to be executed on a particular
  * event. For more information see https://contao.org/manual.html.
  */
-$GLOBALS['TL_HOOKS']['generatePage'][] = array('\\Fry\\Ie11tiles', 'Test');
+$GLOBALS['TL_HOOKS']['generatePage'][] = array('\\Fry\\Ie11tiles\\Tiles', 'Test');
 
 /**
  * AUTO ITEMS
