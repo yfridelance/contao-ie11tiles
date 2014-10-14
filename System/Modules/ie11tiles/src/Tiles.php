@@ -30,6 +30,6 @@ class Tiles
 
     public function test()
     {
-        \Fry\Ie11tiles\Helper::writeFile('test.xml', 'Dies ist ein test');
+        \Ie11tiles\Helper::writeFile('test.xml', 'Dies ist ein test');
     }
 } 
