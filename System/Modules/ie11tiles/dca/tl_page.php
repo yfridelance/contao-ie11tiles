@@ -46,7 +46,7 @@ $GLOBALS['TL_DCA']['tl_page']['fields']['selectIE11Tile'] = array
 (
     'label'            => &$GLOBALS['TL_LANG']['tl_page']['selectIE11Tile'],
     'inputType'        => 'select',
-    'options_callback' => array('IE11TilesHelper', 'getAllPublishedTilesForPage'),
+    //'options_callback' => array('IE11TilesHelper', 'getAllPublishedTilesForPage'),
     'eval'             => array('includeBlankOption' => true, 'chosen' => true, 'tl_class' => 'clr w50'),
     'sql'              => "int(10) unsigned NOT NULL default '0'",
 );

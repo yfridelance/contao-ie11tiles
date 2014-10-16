@@ -1,0 +1,31 @@
+{
+    "name": "fry/ie11tiles",
+    "description": "Allows to generate IE Tiles from the backend.",
+    "keywords": [
+        "contao",
+        "IE Tiles",
+        "usability"
+    ],
+    "type": "contao-module",
+    "license": "LGPL-3.0+",
+    "authors": [
+        {
+            "name": "Yves Fridelance",
+            "email": "yves@fridelance.ch",
+            "homepage": "http://www.fridelance.ch",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.4",
+        "contao-community-alliance/build-system-repository-git": "~1.0",
+        "contao/core": ">=3.2"
+    },
+    "extra": {
+        "contao": {
+            "sources": {
+                "System/Modules/ie11tiles": "system/modules/ie11tiles"
+            }
+        }
+    }
+}

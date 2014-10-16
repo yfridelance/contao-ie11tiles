@@ -26,6 +26,10 @@ $GLOBALS['TL_DCA']['tl_ie11tiles'] = array
         'onsubmit_callback' => array
         (//array('tl_ie11tiles', 'generateBrowserConfig'),
         ),
+        'onload_callback' => array
+        (
+            array('tl_ie11tiles', 'setFieldMandatoryProperty'),
+        ),
         'sql'               => array
         (
             'keys' => array
@@ -92,7 +96,7 @@ $GLOBALS['TL_DCA']['tl_ie11tiles'] = array
                 'label'           => &$GLOBALS['TL_LANG']['tl_page']['toggle'],
                 'icon'            => 'visible.gif',
                 'attributes'      => 'onclick="Backend.getScrollOffset();return AjaxRequest.toggleVisibility(this,%s)"',
-                'button_callback' => array('tl_ie11tiles', 'toggleIcon')
+                //'button_callback' => array('tl_ie11tiles', 'toggleIcon')
             ),
             'show'       => array
             (
@@ -105,31 +109,25 @@ $GLOBALS['TL_DCA']['tl_ie11tiles'] = array
     // Palettes
     'palettes'    => array
     (
-        '__selector__' => array('enableWideTile', 'enableLargeTile'),
-        'default'      => '{title_legend},title,appName,startUrl;{static-tile_legend},tilesColor,smallImage,mediumImage,enableWideTile;{live-tile_legend:hide},title',
+        'default' => '{title_legend},title,appName,startUrl;{static-tile_legend},tileColor,tile70x70Image,tile150x150Image,tile310x150Image,tile310x310Image;{live-tile_legend:hide},title',
     ),
-    // Subpalettes
-    'subpalettes' => array
-    (
-        'enableWideTile'  => 'wideImage,enableLargeTile',
-        'enableLargeTile' => 'largeImage',
-    ),
+
     // Fields
     'fields'      => array
     (
-        'id'              => array
+        'id'               => array
         (
             'sql' => "int(10) unsigned NOT NULL auto_increment"
         ),
-        'tstamp'          => array
+        'tstamp'           => array
         (
             'sql' => "int(10) unsigned NOT NULL default '0'"
         ),
-        'published'       => array
+        'published'        => array
         (
             'sql' => "char(1) NOT NULL default ''"
         ),
-        'title'           => array
+        'title'            => array
         (
             'label'     => &$GLOBALS['TL_LANG']['tl_ie11tiles']['title'],
             'exclude'   => true,
@@ -138,7 +136,7 @@ $GLOBALS['TL_DCA']['tl_ie11tiles'] = array
             'eval'      => array('mandatory' => true, 'maxlength' => 128, 'tl_class' => 'w50'),
             'sql'       => "varchar(128) NOT NULL default ''"
         ),
-        'appName'         => array
+        'appName'          => array
         (
             'label'     => &$GLOBALS['TL_LANG']['tl_ie11tiles']['appName'],
             'exclude'   => true,
@@ -147,18 +145,20 @@ $GLOBALS['TL_DCA']['tl_ie11tiles'] = array
             'eval'      => array('mandatory' => false, 'maxlength' => 128, 'tl_class' => 'clr w50'),
             'sql'       => "varchar(128) NOT NULL default ''"
         ),
-        'startUrl'        => array
+        'startUrl'         => array
         (
             'label'     => &$GLOBALS['TL_LANG']['tl_ie11tiles']['startUrl'],
             'exclude'   => true,
             'search'    => true,
-            'inputType' => 'text',
-            'eval'      => array('mandatory' => false, 'maxlength' => 255, 'tl_class' => 'w50'),
+            'inputType' => 'pageTree',
+            'eval'      => array('mandatory' => false, 'maxlength' => 255, 'tl_class' => 'w50 wizard'),
+            'wizard'    => array(//array('\\Fry\\Ie11tiles\\Helper','pagePicker'),
+            ),
             'sql'       => "varchar(255) NOT NULL default ''"
         ),
-        'tilesColor'      => array
+        'tileColor'        => array
         (
-            'label'     => &$GLOBALS['TL_LANG']['tl_ie11tiles']['tilesColor'],
+            'label' => &$GLOBALS['TL_LANG']['tl_ie11tiles']['tileColor'],
             'exclude'   => true,
             'inputType' => 'text',
             'eval'      => array(
@@ -172,86 +172,91 @@ $GLOBALS['TL_DCA']['tl_ie11tiles'] = array
             ),
             'sql'       => "varchar(64) NOT NULL default ''"
         ),
-        'enableWideTile'  => array
+        'tile70x70Image'   => array
         (
-            'label'     => &$GLOBALS['TL_LANG']['tl_ie11tiles']['enableWideTile'],
-            'exclude'   => true,
-            'inputType' => 'checkbox',
-            'eval'      => array('submitOnChange' => true, 'doNotCopy' => true, 'tl_class' => 'm12 w50 clr'),
-            'sql'       => "char(1) NOT NULL default ''"
-        ),
-        'enableLargeTile' => array
-        (
-            'label'     => &$GLOBALS['TL_LANG']['tl_ie11tiles']['enableLargeTile'],
-            'exclude'   => true,
-            'inputType' => 'checkbox',
-            'eval'      => array('submitOnChange' => true, 'doNotCopy' => true, 'tl_class' => 'm12 w50 clr'),
-            'sql'       => "char(1) NOT NULL default ''"
-        ),
-        'smallImage'      => array
-        (
-            'label'     => &$GLOBALS['TL_LANG']['tl_ie11tiles']['smallImage'],
+            'label'  => &$GLOBALS['TL_LANG']['tl_ie11tiles']['tile70x70Image'],
             'exclude'   => true,
             'inputType' => 'text',
-            'eval'      => array('filesOnly'  => true,
-                                 'extensions' => array('png'),
-                                 'fieldType'  => 'radio',
-                                 'tl_class'   => 'clr w50 wizard'
+            'eval'   => array(
+                'filesOnly'  => true,
+                'extensions' => array('png'),
+                'fieldType'  => 'radio',
+                'tl_class'   => 'clr w50 wizard',
+                'mandatory'  => true,
             ),
-            'wizard'    => array
+            'wizard' => array
             (
-                array('IE11TilesHelper', 'filePicker')
+                array('tl_ie11tiles', 'filePicker')
             ),
             'sql'       => "varchar(255) NOT NULL default ''"
         ),
-        'mediumImage'     => array
+        'tile150x150Image' => array
         (
-            'label'     => &$GLOBALS['TL_LANG']['tl_ie11tiles']['mediumImage'],
+            'label'  => &$GLOBALS['TL_LANG']['tl_ie11tiles']['tile150x150Image'],
             'exclude'   => true,
             'inputType' => 'text',
-            'eval'      => array('filesOnly'  => true,
-                                 'extensions' => array('png'),
-                                 'fieldType'  => 'radio',
-                                 'tl_class'   => 'w50 wizard'
+            'eval'   => array(
+                'filesOnly'  => true,
+                'extensions' => array('png'),
+                'fieldType'  => 'radio',
+                'tl_class'   => 'w50 wizard',
+                'mandatory'  => true,
             ),
-            'wizard'    => array
+            'wizard' => array
             (
-                array('IE11TilesHelper', 'filePicker')
+                array('tl_ie11tiles', 'filePicker')
             ),
             'sql'       => "varchar(255) NOT NULL default ''"
         ),
-        'wideImage'       => array
+        'tile310x150Image' => array
         (
-            'label'     => &$GLOBALS['TL_LANG']['tl_ie11tiles']['wideImage'],
+            'label' => &$GLOBALS['TL_LANG']['tl_ie11tiles']['tile310x150Image'],
             'exclude'   => true,
             'inputType' => 'text',
-            'eval'      => array('filesOnly'  => true,
-                                 'extensions' => array('png'),
-                                 'fieldType'  => 'radio',
-                                 'tl_class'   => 'w50 wizard'
-            ),
-            'wizard'    => array
-            (
-                array('IE11TilesHelper', 'filePicker')
+            'eval'  => array(
+                'filesOnly'      => true,
+                'extensions'     => array('png'),
+                'fieldType'      => 'radio',
+                'tl_class'       => 'w50 wizard',
+                'submitOnChange' => true,
             ),
             'sql'       => "varchar(255) NOT NULL default ''"
         ),
-        'largeImage'      => array
+        'tile310x310Image' => array
         (
-            'label'     => &$GLOBALS['TL_LANG']['tl_ie11tiles']['largeImage'],
+            'label' => &$GLOBALS['TL_LANG']['tl_ie11tiles']['tile310x310Image'],
             'exclude'   => true,
             'inputType' => 'text',
-            'eval'      => array('filesOnly'  => true,
-                                 'extensions' => array('png'),
-                                 'fieldType'  => 'radio',
-                                 'tl_class'   => 'w50 wizard'
-            ),
-            'wizard'    => array
-            (
-                array('IE11TilesHelper', 'filePicker')
+            'eval'  => array(
+                'filesOnly'      => true,
+                'extensions'     => array('png'),
+                'fieldType'      => 'radio',
+                'tl_class'       => 'w50 wizard',
+                'submitOnChange' => true,
             ),
             'sql'       => "varchar(255) NOT NULL default ''"
         ),
 
     ),
 );
+
+class tl_ie11tiles extends \Backend
+{
+    public function setFieldMandatoryProperty(\DataContainer $dc)
+    {
+
+    }
+
+    /**
+     * Return the file picker wizard
+     * @param \DataContainer
+     * @return string
+     */
+    public function filePicker(\DataContainer $dc)
+    {
+        return ' <a href="contao/file.php?do=' . \Input::get('do') . '&amp;table=' . $dc->table . '&amp;field=' . preg_replace('/_row[0-9]*_/i',
+            '__', $dc->field) . '&amp;value=' . $dc->value . '" title="' . specialchars(str_replace("'", "\\'",
+                $GLOBALS['TL_LANG']['MSC']['filepicker'])) . '" onclick="Backend.getScrollOffset();Backend.openModalSelector({\'width\':765,\'title\':\'' . specialchars($GLOBALS['TL_LANG']['MOD']['files'][0]) . '\',\'url\':this.href,\'id\':\'' . $dc->field . '\',\'tag\':\'ctrl_' . $dc->field . ((\Input::get('act') == 'editAll') ? '_' . $dc->id : '') . '\',\'self\':this});return false">' . \Image::getHtml('pickfile.gif',
+            $GLOBALS['TL_LANG']['MSC']['filepicker'], 'style="vertical-align:top;cursor:pointer"') . '</a>';
+    }
+}
